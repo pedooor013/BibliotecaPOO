@@ -11,7 +11,7 @@ public class Usuario
         Bloqueado
     }
 
-    Status StatusUsuario { get; set; }
+    public Status StatusUsuario { get; set; }
 
     //Metodos 
     
