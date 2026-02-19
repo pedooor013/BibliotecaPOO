@@ -5,6 +5,7 @@ public class Usuario
     public int Id { get; private set; }
     public string Nome { get; set; }
     public List<Emprestimo> Emprestimos { get; private set; }
+
     public enum Status
     {
         Ativo,
@@ -14,12 +15,12 @@ public class Usuario
     public Status StatusUsuario { get; set; }
 
     //Metodos 
-    
+
     public void BloquearUsuario()
     {
         StatusUsuario = Status.Bloqueado;
     }
-    
+
     public void DesbloquearUsuario()
     {
         StatusUsuario = Status.Ativo;
@@ -32,7 +33,14 @@ public class Usuario
 
     public void AdicionarEmprestimo(Emprestimo emprestimo)
     {
-        Emprestimos.Add(emprestimo);
+        if (QuantidadeDeEmprestimos(Emprestimos) > 3)
+        {
+            Console.WriteLine("Limite de emprestimos atingido!");
+        }
+        else
+        {
+            Emprestimos.Add(emprestimo);
+        }
     }
 
     public void RemoverEmprestimo(Emprestimo emprestimo)
@@ -42,18 +50,28 @@ public class Usuario
 
     public int QuantidadeDeEmprestimos(List<Emprestimo> emprestimos)
     {
-        return Emprestimos.Count;
+        int numeroDeEmprestimos = 0;
+        foreach (var emprestimo in emprestimos)
+        {
+            if (emprestimo.EstaAtivo())
+            {
+                numeroDeEmprestimos++;
+            }
+        }
+
+        return numeroDeEmprestimos;
     }
-    
-    
+
+
     //Gerador de ID
     private static int _contador = 0;
+
     public static int GerarId()
     {
         _contador++;
         return _contador;
     }
-    
+
     //Construtor
     public Usuario(string nome)
     {

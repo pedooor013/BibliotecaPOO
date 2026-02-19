@@ -29,7 +29,7 @@ public class Livro
     {
         if (Disponivel)
         {
-            Console.WriteLine($"O livro {Titulo} pode ser emprestado!");
+            Console.WriteLine($"O livro {Titulo} pode ser empr  estado!");
         }
         else
         {

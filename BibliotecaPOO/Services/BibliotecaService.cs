@@ -6,7 +6,7 @@ public class BibliotecaService
 {
     public void RealizarEmprestimo(Usuario usuario, Livro livro)
     {
-        if (usuario.StatusUsuario == Usuario.Status.Bloqueado)
+        if (usuario.EhBloqueado())
         {
             Console.WriteLine("O seu status está BLOQUEADO! Não é possível realizar o emprestimo!");
             return;
@@ -18,13 +18,15 @@ public class BibliotecaService
             return;
         }
 
-        if (usuario.Emprestimos.Count > 3)
+        if (usuario.Emprestimos.Count >= 3)
         {
             Console.WriteLine("Limite de emprestimos extrapolado! Não é possível realizar o emprestimo!");
             return;
         }
 
         Emprestimo emprestimo = new Emprestimo(livro, usuario);
+
+        livro.DefinirComoEmprestado();
 
         usuario.Emprestimos.Add(emprestimo);
     }
@@ -39,13 +41,13 @@ public class BibliotecaService
         {
             int diasAtrasados = emprestimo.CalcularDiasAtrasados();
 
-            double valorMultaPorAtraso = diasAtrasados / 0.75;
+            double valorMultaPorAtraso = diasAtrasados * 0.75;
             Console.WriteLine(
                 $"O livro está atrasado a {diasAtrasados} dias! Você tera que pagar uma multa de {valorMultaPorAtraso:C}!");
+            Console.WriteLine("Por conta disso o seu status ficará como BLOQUEADO!");
             emprestimo.Usuario.BloquearUsuario();
         }
 
         emprestimo.Livro.DefinirComoNaoEmprestado();
-        
     }
 }

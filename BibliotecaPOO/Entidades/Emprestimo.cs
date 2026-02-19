@@ -15,18 +15,21 @@ public class Emprestimo
 
     public bool EstaAtivo()
     {
-        return DataQueFoiDevolvido != null;
+        return DataQueFoiDevolvido == null;
     }
 
     public bool EstaAtrasado()
     {
-        if (DataQueFoiDevolvido > DataDevolucao)
+        if (DataQueFoiDevolvido != null && DataQueFoiDevolvido > DataDevolucao)
+        {
+            return true;
+        }else if (DataQueFoiDevolvido == null && DateTime.Now > DataDevolucao)
         {
             return true;
         }
 
         return false;
-    }
+    }   
 
     public int CalcularDiasAtrasados()
     {
