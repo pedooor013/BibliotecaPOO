@@ -1,4 +1,5 @@
 ﻿using BibliotecaPOO.Entidades;
+using BibliotecaPOO.Services;
 
 namespace BibliotecaPOO
 {
@@ -99,8 +100,53 @@ namespace BibliotecaPOO
             MostrarMenuPrincipal();
         }
 
-        static void ListarUsuarios()
+        void ListarUsuarios()
         {
+            foreach (var usuarios in usuariosCadastrados)
+            {
+                Console.WriteLine($"Id: {usuarios.Id}" +
+                                  $"\nNome: {usuarios.Nome}" +
+                                  $"\nQntd. Emprestimos: {usuarios.QuantidadeDeEmprestimos(usuarios.Emprestimos)}" +
+                                  $"\n====================================\n");
+            }
+        }
+
+        void DetalhesUsuarios()
+        {
+            ListarUsuarios();
+            Console.WriteLine("Digite o ID do usuario selecionado:");
+            int id = int.Parse(Console.ReadLine());
+            DetalharUsuarioEscolhido(id);
+        }
+
+        void DetalharUsuarioEscolhido(int id)
+        {
+            foreach (var usuario in usuariosCadastrados)
+            {
+                if (usuario.Id == id)
+                {
+                    Console.WriteLine($"Informações Usuário:" +
+                                      $"\nId: {usuario.Id}" +
+                                      $"\nNome: {usuario.Nome}" +
+                                      $"\nStatus: {usuario.StatusUsuario}");
+                    Console.WriteLine("Lista de Emprestimos: ");
+                    usuario.ListarEmprestimos();
+                    return;
+                }
+            }
+        }
+        void EscolherUsuario()
+        {
+            ListarUsuarios();
+            Console.WriteLine("Digite o ID do usuario selecionado:");
+            int id = int.Parse(Console.ReadLine());
+            
+            MenuUsuarioEscolhido(id);
+            
+        }
+        void MenuUsuarioEscolhido(int id)
+        {
+            Console.WriteLine();
         }
     }
 }

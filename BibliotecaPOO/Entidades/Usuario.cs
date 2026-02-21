@@ -62,6 +62,17 @@ public class Usuario
         return numeroDeEmprestimos;
     }
 
+    public void ListarEmprestimos()
+    {
+        foreach (var livros in Emprestimos)
+        {
+            Console.WriteLine($"ID: {livros.Livro.Id}" +
+                              $"\nTitulo: {livros.Livro.Titulo}" +
+                              $"\nData Devolução: {livros.DataDevolucao:dd/MM/yyyy}");
+            return;
+        }
+    }
+
 
     //Gerador de ID
     private static int _contador = 0;
