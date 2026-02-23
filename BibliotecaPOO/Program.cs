@@ -51,18 +51,19 @@ namespace BibliotecaPOO
         }
 
         //Usuários
-        static void MostrarMenuUsuarios()
+        void MostrarMenuUsuarios()
         {
             Console.WriteLine("Qual dessas ações você deseja fazer: " +
                               "\n01) Cadastrar usuários;" +
                               "\n02) Listar usuários;" +
                               "\n03) Detalhes de um usuário;" +
-                              "\n04) Escolher um usuário;\n");
+                              "\n04) Escolher um usuário;" +
+                              "\n05) Menu principal;\n");
             int escolhaUser = int.Parse(Console.ReadLine());
             DecisaoUsuarioUsuarios(escolhaUser);
         }
 
-        static void DecisaoUsuarioUsuarios(int escolhaUser)
+        void DecisaoUsuarioUsuarios(int escolhaUser)
         {
             switch (escolhaUser)
             {
@@ -73,10 +74,10 @@ namespace BibliotecaPOO
                     ListarUsuarios();
                     break;
                 case 3:
-                    DetalhesUsuarios();
+                    DetalharUsuarioEscolhido();
                     break;
                 case 4:
-                    EscolherUsuarios();
+                    EscolherUsuario();
                     break;
                 case 5:
                     MostrarMenuPrincipal();
@@ -111,16 +112,14 @@ namespace BibliotecaPOO
             }
         }
 
-        void DetalhesUsuarios()
+        void DetalharUsuarioEscolhido()
         {
             ListarUsuarios();
-            Console.WriteLine("Digite o ID do usuario selecionado:");
-            int id = int.Parse(Console.ReadLine());
-            DetalharUsuarioEscolhido(id);
-        }
 
-        void DetalharUsuarioEscolhido(int id)
-        {
+            Console.WriteLine("Digite o ID do usuario escolhido: ");
+            int id = int.Parse(Console.ReadLine());
+
+            int contador = 0;
             foreach (var usuario in usuariosCadastrados)
             {
                 if (usuario.Id == id)
@@ -131,22 +130,75 @@ namespace BibliotecaPOO
                                       $"\nStatus: {usuario.StatusUsuario}");
                     Console.WriteLine("Lista de Emprestimos: ");
                     usuario.ListarEmprestimos();
+                    contador++;
                     return;
                 }
             }
+
+            if (contador != 1)
+            {
+                Console.WriteLine("ID inválido! Digite novamente!");
+                DetalharUsuarioEscolhido();
+            }
         }
+
         void EscolherUsuario()
         {
             ListarUsuarios();
             Console.WriteLine("Digite o ID do usuario selecionado:");
             int id = int.Parse(Console.ReadLine());
-            
+
             MenuUsuarioEscolhido(id);
-            
         }
+
         void MenuUsuarioEscolhido(int id)
         {
-            Console.WriteLine();
+            Console.WriteLine("01) Realizar um emprestimo;" +
+                              "\n02) Listar emprestimos;" +
+                              "\n03) Escolher outro usuário;" +
+                              "\n04) Sair;");
+            int escolha = int.Parse(Console.ReadLine());
+            DecisaoAcaoUsuario(escolha, id);
+        }
+
+        void DecisaoAcaoUsuario(int escolha, int idUsuario)
+        {
+            switch (escolha)
+            {
+                case 1:
+                    CadastrarEmprestimo();
+                    break;
+                case 2:
+                    ListarEmprestimosAtivos(int idUsuario);
+                    break;
+                case 3:
+                    EscolherUsuario();
+                    break;
+                case 4:
+                    MostrarMenuUsuarios();
+                    break;
+                default:
+                    Console.WriteLine("Opção inválida! Digite novamente...");
+                    MenuUsuarioEscolhido(idUsuario);
+                    break;
+            }
+        }
+
+        void ListarEmprestimosAtivos(int idUsuario)
+        {
+            foreach (var usuario in usuariosCadastrados)
+            {
+                if (usuario.Id == idUsuario)
+                {
+                    Console.WriteLine($"Informações Usuário:" +
+                                      $"\nId: {usuario.Id}" +
+                                      $"\nNome: {usuario.Nome}" +
+                                      $"\nStatus: {usuario.StatusUsuario}");
+                    Console.WriteLine("Lista de Emprestimos: ");
+                    usuario.ListarEmprestimos();
+                    return;
+                }
+            }
         }
     }
 }
