@@ -5,9 +5,9 @@ namespace BibliotecaPOO
 {
     class Program
     {
-        public List<Emprestimo> emprestimosCadastrados = new List<Emprestimo>();
-        public List<Usuario> usuariosCadastrados = new List<Usuario>();
-        public List<Livro> Livros = new List<Livro>();
+        public List<Emprestimo> EmprestimosCadastrados = new List<Emprestimo>();
+        public List<Usuario> UsuariosCadastrados = new List<Usuario>();
+        public List<Livro> LivrosCadastrados = new List<Livro>();
 
         public static void Main(string[] args)
         {
@@ -103,7 +103,7 @@ namespace BibliotecaPOO
 
         void ListarUsuarios()
         {
-            foreach (var usuarios in usuariosCadastrados)
+            foreach (var usuarios in UsuariosCadastrados)
             {
                 Console.WriteLine($"Id: {usuarios.Id}" +
                                   $"\nNome: {usuarios.Nome}" +
@@ -120,7 +120,7 @@ namespace BibliotecaPOO
             int id = int.Parse(Console.ReadLine());
 
             int contador = 0;
-            foreach (var usuario in usuariosCadastrados)
+            foreach (var usuario in UsuariosCadastrados)
             {
                 if (usuario.Id == id)
                 {
@@ -166,10 +166,10 @@ namespace BibliotecaPOO
             switch (escolha)
             {
                 case 1:
-                    CadastrarEmprestimo();
+                    CadastrarEmprestimo(idUsuario);
                     break;
                 case 2:
-                    ListarEmprestimosAtivos(int idUsuario);
+                    ListarEmprestimosAtivos(idUsuario);
                     break;
                 case 3:
                     EscolherUsuario();
@@ -186,7 +186,7 @@ namespace BibliotecaPOO
 
         void ListarEmprestimosAtivos(int idUsuario)
         {
-            foreach (var usuario in usuariosCadastrados)
+            foreach (var usuario in UsuariosCadastrados)
             {
                 if (usuario.Id == idUsuario)
                 {
@@ -197,6 +197,25 @@ namespace BibliotecaPOO
                     Console.WriteLine("Lista de Emprestimos: ");
                     usuario.ListarEmprestimos();
                     return;
+                }
+            }
+        }
+
+        void CadastrarEmprestimo(int idUsuario)
+        {
+            ListarLivrosDisponiveis();
+        }
+
+        void ListarLivrosDisponiveis()
+        {
+            foreach (var livro in LivrosCadastrados)
+            {
+                if (livro.Disponivel)
+                {
+                    Console.WriteLine($"\nID: {livro.Id};" +
+                                      $"Titulo: {livro.Titulo};" +
+                                      $"\nAutor: {livro.Autor};" +
+                                      $"\n===============================");
                 }
             }
         }
