@@ -8,6 +8,7 @@ namespace BibliotecaPOO
         public List<Emprestimo> EmprestimosCadastrados = new List<Emprestimo>();
         public List<Usuario> UsuariosCadastrados = new List<Usuario>();
         public List<Livro> LivrosCadastrados = new List<Livro>();
+        BibliotecaService bibliotecaService = new BibliotecaService();
 
         public static void Main(string[] args)
         {
@@ -206,6 +207,11 @@ namespace BibliotecaPOO
             ListarLivrosDisponiveis();
             Console.WriteLine("Digite o ID do livro escolhido:");
             int idLivro = int.Parse(Console.ReadLine());
+
+            Livro livro = SelecionarLivroPorId(idLivro);
+            Usuario usuario = SelecionarUsuarioPorId(idUsuario);
+
+            bibliotecaService.RealizarEmprestimo(usuario, livro);
         }
 
         void ListarLivrosDisponiveis()
@@ -228,8 +234,7 @@ namespace BibliotecaPOO
             {
                 if (usuario.Id == idUsuario)
                 {
-                    Usuario usuarioEscolhido = usuario;
-                    return usuarioEscolhido;
+                    return usuario;
                 }
             }
 
@@ -242,8 +247,7 @@ namespace BibliotecaPOO
             {
                 if (livro.Id == idLivro)
                 {
-                    Livro livroEscolhido = livro;
-                    return livroEscolhido;
+                    return livro;
                 }
             }
 
