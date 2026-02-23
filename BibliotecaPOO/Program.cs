@@ -204,6 +204,8 @@ namespace BibliotecaPOO
         void CadastrarEmprestimo(int idUsuario)
         {
             ListarLivrosDisponiveis();
+            Console.WriteLine("Digite o ID do livro escolhido:");
+            int idLivro = int.Parse(Console.ReadLine());
         }
 
         void ListarLivrosDisponiveis()
@@ -218,6 +220,34 @@ namespace BibliotecaPOO
                                       $"\n===============================");
                 }
             }
+        }
+
+        Usuario SelecionarUsuarioPorId(int idUsuario)
+        {
+            foreach (var usuario in UsuariosCadastrados)
+            {
+                if (usuario.Id == idUsuario)
+                {
+                    Usuario usuarioEscolhido = usuario;
+                    return usuarioEscolhido;
+                }
+            }
+
+            return null;
+        }
+
+        Livro SelecionarLivroPorId(int idLivro)
+        {
+            foreach (var livro in LivrosCadastrados)
+            {
+                if (livro.Id == idLivro)
+                {
+                    Livro livroEscolhido = livro;
+                    return livroEscolhido;
+                }
+            }
+
+            return null;
         }
     }
 }
