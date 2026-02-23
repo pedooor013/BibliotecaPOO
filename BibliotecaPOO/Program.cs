@@ -155,9 +155,10 @@ namespace BibliotecaPOO
         void MenuUsuarioEscolhido(int id)
         {
             Console.WriteLine("01) Realizar um emprestimo;" +
-                              "\n02) Listar emprestimos;" +
-                              "\n03) Escolher outro usuário;" +
-                              "\n04) Sair;");
+                              "\n02) Devolver um livro;" +
+                              "\n03) Listar emprestimos;" +
+                              "\n04) Escolher outro usuário;" +
+                              "\n05) Sair;");
             int escolha = int.Parse(Console.ReadLine());
             DecisaoAcaoUsuario(escolha, id);
         }
@@ -170,12 +171,15 @@ namespace BibliotecaPOO
                     CadastrarEmprestimo(idUsuario);
                     break;
                 case 2:
-                    ListarEmprestimosAtivos(idUsuario);
+                    DevolverLivro(idUsuario);
                     break;
                 case 3:
-                    EscolherUsuario();
+                    ListarEmprestimosAtivos(idUsuario);
                     break;
                 case 4:
+                    EscolherUsuario();
+                    break;
+                case 5:
                     MostrarMenuUsuarios();
                     break;
                 default:
@@ -226,6 +230,11 @@ namespace BibliotecaPOO
                                       $"\n===============================");
                 }
             }
+        }
+
+        void DevolverLivro(int idUsuario)
+        {
+            
         }
 
         Usuario SelecionarUsuarioPorId(int idUsuario)
