@@ -234,7 +234,47 @@ namespace BibliotecaPOO
 
         void DevolverLivro(int idUsuario)
         {
-            
+            ListarEmprestimosUsuarioPorId(idUsuario);
+
+            Console.WriteLine("Digite o ID do livro que deseja devolver: ");
+            int idEmprestimo = int.Parse(Console.ReadLine());
+
+
+            Usuario usuario = SelecionarUsuarioPorId(idUsuario);
+
+            Emprestimo emprestimo = SelecionarEmprestimoPorId(usuario, idEmprestimo);
+
+            if (emprestimo == null)
+            {
+                Console.WriteLine("Nenhum emprestimo encontrado! Digite novamente!");
+                DevolverLivro(idUsuario);
+            }
+
+            bibliotecaService.DevolverLivro(emprestimo);
+        }
+
+        void ListarEmprestimosUsuarioPorId(int idUsuario)
+        {
+            foreach (var usuario in UsuariosCadastrados)
+            {
+                if (usuario.Id == idUsuario)
+                {
+                    usuario.ListarEmprestimos();
+                }
+            }
+        }
+
+        Emprestimo SelecionarEmprestimoPorId(Usuario usuario, int idEmprestimo)
+        {
+            foreach (var emprestimo in usuario.Emprestimos)
+            {
+                if (emprestimo.Livro.Id == idEmprestimo)
+                {
+                    return emprestimo;
+                }
+            }
+
+            return null;
         }
 
         Usuario SelecionarUsuarioPorId(int idUsuario)
