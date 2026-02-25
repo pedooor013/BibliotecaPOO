@@ -359,7 +359,24 @@ namespace BibliotecaPOO
 
         void ListarTodosLivros()
         {
-            
+            Console.WriteLine("Todos os livros cadastrados no sistema: ");
+
+            foreach (var livro in LivrosCadastrados)
+            {
+                Console.WriteLine($"ID: {livro.Id}, " +
+                                  $"\nTitulo: {livro.Titulo};" +
+                                  $"\nAutor: {livro.Autor};");
+                if (livro.Disponivel)
+                {
+                    Console.WriteLine("Status: Disponivel;");
+                }
+                else
+                {
+                    Console.WriteLine("Status: Não disponivel;");
+                }
+
+                Console.WriteLine("==================");
+            }
         }
     }
 }
