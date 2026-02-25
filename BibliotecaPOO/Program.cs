@@ -10,12 +10,12 @@ namespace BibliotecaPOO
         public List<Livro> LivrosCadastrados = new List<Livro>();
         BibliotecaService bibliotecaService = new BibliotecaService();
 
-        public static void Main(string[] args)
+        public void Main(string[] args)
         {
             MostrarMenuPrincipal();
         }
 
-        static void MostrarMenuPrincipal()
+        void MostrarMenuPrincipal()
         {
             Console.WriteLine("Qual ação você deseja fazer: " +
                               "\n01) Usuários;" +
@@ -27,7 +27,7 @@ namespace BibliotecaPOO
             DecisaoUsuario(escolhaUser);
         }
 
-        static void DecisaoUsuario(int escolhaUser)
+        void DecisaoUsuario(int escolhaUser)
         {
             switch (escolhaUser)
             {
@@ -301,6 +301,41 @@ namespace BibliotecaPOO
             }
 
             return null;
+        }
+
+        //Livros
+
+        void MostrarMenuLivros()
+        {
+            Console.WriteLine($"Menu de Livros:" +
+                              $"\n01) Cadastrar um livro;" +
+                              $"\n02) Listar livros;" +
+                              $"\n03) Sair;");
+
+            Console.WriteLine("Escolha o que deseja fazer:");
+            int escolhaUsuario = int.Parse(Console.ReadLine());
+
+            DecisaoUsuarioLivros(escolhaUsuario);
+        }
+
+        void DecisaoUsuarioLivros(int escolha)
+        {
+            switch (escolha)
+            {
+                case 1:
+                    CadastrarLivro();
+                    break;
+                case 2:
+                    ListarTodosLivros();
+                    break;
+                case 3:
+                    MostrarMenuPrincipal();
+                    break;
+                default:
+                    Console.WriteLine("Opção inválida! Digite novamente...");
+                    MostrarMenuLivros();
+                    break;
+            }
         }
     }
 }
