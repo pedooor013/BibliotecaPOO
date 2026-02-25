@@ -90,12 +90,14 @@ namespace BibliotecaPOO
             }
         }
 
-        static void CadastrarUsuarios()
+        void CadastrarUsuarios()
         {
             Console.WriteLine("\nCadastro de usuário:" +
                               "\nNome usuário:");
             string nome = Console.ReadLine();
             Usuario usuario = new Usuario(nome);
+
+            UsuariosCadastrados.Add(usuario);
 
             Console.WriteLine("Usuário cadastrado com sucesso!");
 
@@ -309,7 +311,7 @@ namespace BibliotecaPOO
         {
             Console.WriteLine($"Menu de Livros:" +
                               $"\n01) Cadastrar um livro;" +
-                              $"\n02) Listar livros;" +
+                              $"\n02) Listar todos os livros;" +
                               $"\n03) Sair;");
 
             Console.WriteLine("Escolha o que deseja fazer:");
@@ -336,6 +338,28 @@ namespace BibliotecaPOO
                     MostrarMenuLivros();
                     break;
             }
+        }
+
+        void CadastrarLivro()
+        {
+            Console.WriteLine("Digite o titulo do livro:");
+            string titulo = Console.ReadLine();
+
+            Console.WriteLine("Digite o nome do autor do livro:");
+            string nomeAutor = Console.ReadLine();
+
+            Livro livro = new Livro(titulo, nomeAutor);
+
+            LivrosCadastrados.Add(livro);
+
+            Console.WriteLine("Livro cadastrado com sucesso!");
+
+            MostrarMenuPrincipal();
+        }
+
+        void ListarTodosLivros()
+        {
+            
         }
     }
 }
