@@ -28,6 +28,8 @@ public class BibliotecaService
 
         livro.DefinirComoEmprestado();
 
+        Console.WriteLine("Emprestimo realizado com sucesso!");
+
         usuario.Emprestimos.Add(emprestimo);
     }
 
@@ -48,6 +50,7 @@ public class BibliotecaService
             emprestimo.Usuario.BloquearUsuario();
         }
 
+        Console.WriteLine("Livro devolvido com sucesso!");
         emprestimo.Livro.DefinirComoNaoEmprestado();
     }
 }

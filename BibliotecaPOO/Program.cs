@@ -5,29 +5,28 @@ namespace BibliotecaPOO
 {
     class Program
     {
-        public List<Emprestimo> EmprestimosCadastrados = new List<Emprestimo>();
-        public List<Usuario> UsuariosCadastrados = new List<Usuario>();
-        public List<Livro> LivrosCadastrados = new List<Livro>();
-        BibliotecaService bibliotecaService = new BibliotecaService();
+        static public List<Usuario> UsuariosCadastrados = new List<Usuario>();
+        static public List<Livro> LivrosCadastrados = new List<Livro>();
+        static BibliotecaService bibliotecaService = new BibliotecaService();
 
-        public void Main(string[] args)
+        static public void Main(string[] args)
         {
+            Console.WriteLine("=== Sistema de gerenciamento da biblioteca ===");
             MostrarMenuPrincipal();
         }
 
-        void MostrarMenuPrincipal()
+        static void MostrarMenuPrincipal()
         {
             Console.WriteLine("Qual ação você deseja fazer: " +
                               "\n01) Usuários;" +
                               "\n02) Livros;" +
-                              "\n03) Emprestimos;" +
-                              "\n04) Sair;\n");
+                              "\n03) Sair;\n");
             int escolhaUser = int.Parse(Console.ReadLine());
 
             DecisaoUsuario(escolhaUser);
         }
 
-        void DecisaoUsuario(int escolhaUser)
+        static void DecisaoUsuario(int escolhaUser)
         {
             switch (escolhaUser)
             {
@@ -38,9 +37,6 @@ namespace BibliotecaPOO
                     MostrarMenuLivros();
                     break;
                 case 3:
-                    MostrarMenuEmprestimos();
-                    break;
-                case 4:
                     Console.WriteLine("Saindo...");
                     Environment.Exit(0);
                     break;
@@ -52,7 +48,7 @@ namespace BibliotecaPOO
         }
 
         //Usuários
-        void MostrarMenuUsuarios()
+        static void MostrarMenuUsuarios()
         {
             Console.WriteLine("Qual dessas ações você deseja fazer: " +
                               "\n01) Cadastrar usuários;" +
@@ -64,7 +60,7 @@ namespace BibliotecaPOO
             DecisaoUsuarioUsuarios(escolhaUser);
         }
 
-        void DecisaoUsuarioUsuarios(int escolhaUser)
+        static void DecisaoUsuarioUsuarios(int escolhaUser)
         {
             switch (escolhaUser)
             {
@@ -73,6 +69,7 @@ namespace BibliotecaPOO
                     break;
                 case 2:
                     ListarUsuarios();
+                    MostrarMenuPrincipal();
                     break;
                 case 3:
                     DetalharUsuarioEscolhido();
@@ -90,7 +87,7 @@ namespace BibliotecaPOO
             }
         }
 
-        void CadastrarUsuarios()
+        static void CadastrarUsuarios()
         {
             Console.WriteLine("\nCadastro de usuário:" +
                               "\nNome usuário:");
@@ -104,7 +101,7 @@ namespace BibliotecaPOO
             MostrarMenuPrincipal();
         }
 
-        void ListarUsuarios()
+        static void ListarUsuarios()
         {
             foreach (var usuarios in UsuariosCadastrados)
             {
@@ -115,7 +112,7 @@ namespace BibliotecaPOO
             }
         }
 
-        void DetalharUsuarioEscolhido()
+        static void DetalharUsuarioEscolhido()
         {
             ListarUsuarios();
 
@@ -134,7 +131,7 @@ namespace BibliotecaPOO
                     Console.WriteLine("Lista de Emprestimos: ");
                     usuario.ListarEmprestimos();
                     contador++;
-                    return;
+                    MostrarMenuPrincipal();
                 }
             }
 
@@ -145,7 +142,7 @@ namespace BibliotecaPOO
             }
         }
 
-        void EscolherUsuario()
+        static void EscolherUsuario()
         {
             ListarUsuarios();
             Console.WriteLine("Digite o ID do usuario selecionado:");
@@ -154,7 +151,7 @@ namespace BibliotecaPOO
             MenuUsuarioEscolhido(id);
         }
 
-        void MenuUsuarioEscolhido(int id)
+        static void MenuUsuarioEscolhido(int id)
         {
             Console.WriteLine("01) Realizar um emprestimo;" +
                               "\n02) Devolver um livro;" +
@@ -165,7 +162,7 @@ namespace BibliotecaPOO
             DecisaoAcaoUsuario(escolha, id);
         }
 
-        void DecisaoAcaoUsuario(int escolha, int idUsuario)
+        static void DecisaoAcaoUsuario(int escolha, int idUsuario)
         {
             switch (escolha)
             {
@@ -191,7 +188,7 @@ namespace BibliotecaPOO
             }
         }
 
-        void ListarEmprestimosAtivos(int idUsuario)
+        static void ListarEmprestimosAtivos(int idUsuario)
         {
             foreach (var usuario in UsuariosCadastrados)
             {
@@ -203,12 +200,12 @@ namespace BibliotecaPOO
                                       $"\nStatus: {usuario.StatusUsuario}");
                     Console.WriteLine("Lista de Emprestimos: ");
                     usuario.ListarEmprestimos();
-                    return;
                 }
             }
+            MostrarMenuPrincipal();
         }
 
-        void CadastrarEmprestimo(int idUsuario)
+        static void CadastrarEmprestimo(int idUsuario)
         {
             ListarLivrosDisponiveis();
             Console.WriteLine("Digite o ID do livro escolhido:");
@@ -218,9 +215,10 @@ namespace BibliotecaPOO
             Usuario usuario = SelecionarUsuarioPorId(idUsuario);
 
             bibliotecaService.RealizarEmprestimo(usuario, livro);
+            MostrarMenuPrincipal();
         }
 
-        void ListarLivrosDisponiveis()
+        static void ListarLivrosDisponiveis()
         {
             foreach (var livro in LivrosCadastrados)
             {
@@ -234,7 +232,7 @@ namespace BibliotecaPOO
             }
         }
 
-        void DevolverLivro(int idUsuario)
+        static void DevolverLivro(int idUsuario)
         {
             ListarEmprestimosUsuarioPorId(idUsuario);
 
@@ -253,9 +251,10 @@ namespace BibliotecaPOO
             }
 
             bibliotecaService.DevolverLivro(emprestimo);
+            MostrarMenuPrincipal();
         }
 
-        void ListarEmprestimosUsuarioPorId(int idUsuario)
+        static void ListarEmprestimosUsuarioPorId(int idUsuario)
         {
             foreach (var usuario in UsuariosCadastrados)
             {
@@ -266,7 +265,7 @@ namespace BibliotecaPOO
             }
         }
 
-        Emprestimo SelecionarEmprestimoPorId(Usuario usuario, int idEmprestimo)
+        static Emprestimo SelecionarEmprestimoPorId(Usuario usuario, int idEmprestimo)
         {
             foreach (var emprestimo in usuario.Emprestimos)
             {
@@ -279,7 +278,7 @@ namespace BibliotecaPOO
             return null;
         }
 
-        Usuario SelecionarUsuarioPorId(int idUsuario)
+        static Usuario SelecionarUsuarioPorId(int idUsuario)
         {
             foreach (var usuario in UsuariosCadastrados)
             {
@@ -292,7 +291,7 @@ namespace BibliotecaPOO
             return null;
         }
 
-        Livro SelecionarLivroPorId(int idLivro)
+        static Livro SelecionarLivroPorId(int idLivro)
         {
             foreach (var livro in LivrosCadastrados)
             {
@@ -307,7 +306,7 @@ namespace BibliotecaPOO
 
         //Livros
 
-        void MostrarMenuLivros()
+        static void MostrarMenuLivros()
         {
             Console.WriteLine($"Menu de Livros:" +
                               $"\n01) Cadastrar um livro;" +
@@ -320,7 +319,7 @@ namespace BibliotecaPOO
             DecisaoUsuarioLivros(escolhaUsuario);
         }
 
-        void DecisaoUsuarioLivros(int escolha)
+        static void DecisaoUsuarioLivros(int escolha)
         {
             switch (escolha)
             {
@@ -340,7 +339,7 @@ namespace BibliotecaPOO
             }
         }
 
-        void CadastrarLivro()
+        static void CadastrarLivro()
         {
             Console.WriteLine("Digite o titulo do livro:");
             string titulo = Console.ReadLine();
@@ -357,7 +356,7 @@ namespace BibliotecaPOO
             MostrarMenuPrincipal();
         }
 
-        void ListarTodosLivros()
+        static void ListarTodosLivros()
         {
             Console.WriteLine("Todos os livros cadastrados no sistema: ");
 
@@ -377,6 +376,8 @@ namespace BibliotecaPOO
 
                 Console.WriteLine("==================");
             }
+
+            MostrarMenuPrincipal();
         }
     }
 }

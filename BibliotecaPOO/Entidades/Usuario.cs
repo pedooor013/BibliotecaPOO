@@ -69,7 +69,6 @@ public class Usuario
             Console.WriteLine($"ID: {livros.Livro.Id}" +
                               $"\nTitulo: {livros.Livro.Titulo}" +
                               $"\nData Devolução: {livros.DataDevolucao:dd/MM/yyyy}");
-            return;
         }
     }
 
